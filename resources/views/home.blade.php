@@ -1,61 +1,90 @@
+@extends('layout.main');
+
 @php
-    $menuHeader = config('menues.menuHeader');
-    $navHeader = config('menues.navHeader');
+    $products = config('products');
 @endphp
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+@section('content')
 
-    {{-- Font-Awesome --}}
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css' integrity='sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==' crossorigin='anonymous'/>
+    <!-- MAIN WRAPPER -->
+    <div class="main-wrap d-flex container justify-between">
 
-    <title>Laravel Boolando</title>
+        @foreach ($products as $product)
+        <div class="product">
 
-    {{-- Vite --}}
-    @vite('resources/js/app.js')
+            <!-- IMAGE BOX -->
+            <div class="big-col">
 
-</head>
-<body>
-    <header>
+              <div class="img-product">
+                <img src="{{$product['frontImage']}}" alt="">
+                <img src="{{$product['backImage']}}" alt="">
+              </div>
 
-        <div class="top-bar container d-flex h-100">
+              <span {{-- @click="product.isFav = !product.isFav" :class="{'fav': product.isFav}" --}} class="heart">&hearts;</span>
 
-          <!-- WEBSITE MENU -->
-          <nav class="menu website">
-            <ul>
-            @foreach ($navHeader as $item)
-                <li ><a href="#">{{$item['text']}}</a></li>
-            @endforeach
-            </ul>
-          </nav>
-          <!-- /WEBSITE MENU -->
+              @if(!empty($product['badges']))
+              <div class="img-bottom-text">
+                @foreach ($product['badges'] as $badge)
 
-          <!-- LOGO -->
-          <div class="logo w-50">
-            <a href="#"><img src="/boolean-logo.png" class="ht-25" alt="Logo Boolean"></a>
-          </div>
-          <!-- /LOGO -->
+                @php
 
-          <!-- USER MENU -->
-           <div class="menu user">
-            <ul>
-              <li>
-                @foreach ($menuHeader as $item)
+                $badge['type'] == "discount" ? $product['isDiscount'] = true : $product['isDiscount'] = false;
 
-                <a href="#"><i class="{{$item['class']}}"></i></a>
+                @endphp
+
+                    <span class="{{$badge['type']}}">{{$badge['value']}}</span>
+
                 @endforeach
-              </li>
-            </ul>
-          </div>
-          <!-- /USER MENU -->
+
+                {{-- SE FUNZIONA, RIMUOVI SOTTO --}}
+                {{-- <span v-if="product.isDiscounted" class="badge discount-percent">-{{product.discountPercentage}}&percnt;</span>
+                <span v-if="product.isEco" class="badge green-choice">Sostenibilità</span> --}}
+                {{-- SE FUNZIONA, RIMUOVI SOPRA --}}
+
+              </div>
+              @endif
+
+            </div>
+            <!-- /IMAGE BOX -->
+
+            <!-- TEXT BOX -->
+            <div class="small-col">
+              <div class="text-box">
+
+                <span class="product-brand">{{ $product['brand'] }}</span>
+
+                <h2 class="product-model">{{ $product['name'] }}</h2>
+
+                @php
+
+                    $alfonso = $product['price'];
+
+                    if($product['isDiscount']) {
+                        $exp = (-intval("-50%")/100);
+                        $total = bcadd(0, $alfonso * $exp, 2);
+                    }else {
+                        $total = $product['price'];
+                    }
+
+                @endphp
+
+                <span v-else class="discount price"> {{$total}} &euro; </span>
+
+                @if($product['isDiscount'])
+
+                    <span class="original price"> {{$product['price']}} &euro; </span>
+
+                @endif
+
+              </div>
+            </div>
+            <!-- /TEXT BOX -->
 
         </div>
-        <!-- top-bar -->
+        @endforeach
 
-      </header>
-</body>
-</html>
+
+    </div>
+    <!-- /MAIN WRAPPER -->
+
+@endsection

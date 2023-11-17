@@ -1,0 +1,69 @@
+.product {
+    width: 33%;
+    max-width: 390px;
+    min-width: 245px;
+    margin: 20px 0;
+    /* BIG COL (IMAGE BOX) */
+    .big-col {
+      position: relative;
+      cursor: pointer;
+      img {
+        width: 100%;
+      }
+      img:last-child {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      &:hover img:last-child {
+        display: block;
+      }
+
+      .heart {
+        position: absolute;
+        top: 20px;
+        right: 0;
+        background-color: white;
+        font-size: 2rem;
+        padding: 5px 15px;
+        &:hover {
+          color: red;
+        }
+        &.fav {
+          color: red;
+        }
+      }
+
+      .img-bottom-text {
+        position: absolute;
+        bottom: 40px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        color: white;
+
+        .badge {
+          padding: 5px 10px;
+          margin-right: 5px;
+        }
+        .discount {
+          background-color: red;
+        }
+        .tag {
+          background-color: green;
+        }
+      }
+
+
+    }
+
+    .big-col,
+    .small-col {
+      width: 100%;
+    }
+
+
+}
+
+
+
