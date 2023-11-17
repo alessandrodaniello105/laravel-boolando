@@ -20,10 +20,12 @@
                 <img src="{{Vite::asset('resources/assets/img/') . $product['backImage']}}" alt="">
               </div>
 
-              <span {{-- @click="product.isFav = !product.isFav" :class="{'fav': product.isFav}" --}} class="heart">&hearts;</span>
+              <span {{-- @click="product.isFav = !product.isFav" --}} class="heart {{$product['isInFavorites'] ? 'fav' : ''}}">&hearts;</span>
 
               @if(!empty($product['badges']))
+
               <div class="img-bottom-text">
+
                 @foreach ($product['badges'] as $badge)
 
                 @php
