@@ -16,8 +16,8 @@
             <div class="big-col">
 
               <div class="img-product">
-                <img src="{{$product['frontImage']}}" alt="">
-                <img src="{{$product['backImage']}}" alt="">
+                <img src="{{Vite::asset('resources/assets/img/') . $product['frontImage'] }}" alt="">
+                <img src="{{Vite::asset('resources/assets/img/') . $product['backImage']}}" alt="">
               </div>
 
               <span {{-- @click="product.isFav = !product.isFav" :class="{'fav': product.isFav}" --}} class="heart">&hearts;</span>
@@ -32,7 +32,7 @@
 
                 @endphp
 
-                    <span class="{{$badge['type']}}">{{$badge['value']}}</span>
+                    <span class="badge {{$badge['type']}}">{{$badge['value']}}</span>
 
                 @endforeach
 
@@ -68,7 +68,7 @@
 
                 @endphp
 
-                <span v-else class="discount price"> {{$total}} &euro; </span>
+                <span class="discount price"> {{$total}} &euro; </span>
 
                 @if($product['isDiscount'])
 
